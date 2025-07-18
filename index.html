@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Aventura: Alejandro & Natalia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --base-blue: #3498DB;
+            --accent-red: #E74C3C;
+            --emphasis-orange: #F39C12;
+            --text-dark: #2c3e50;
+            --bg-light: #fdfefe;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        .text-brand-base { color: var(--base-blue); }
+        .bg-brand-base { background-color: var(--base-blue); }
+        .text-brand-accent { color: var(--accent-red); }
+        .bg-brand-accent { background-color: var(--accent-red); }
+        .text-brand-emphasis { color: var(--emphasis-orange); }
+        .bg-brand-emphasis { background-color: var(--emphasis-orange); }
+        .card-hover {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .couple-hero h1 { font-size: 2.8rem; line-height: 1.2; }
+        @media (min-width: 768px) { .couple-hero h1 { font-size: 4rem; } }
+        .couple-hero .couple-name { color: var(--accent-red); font-weight: 900; }
+        .heart-trail { font-size: 1.5rem; color: var(--base-blue); letter-spacing: 0.5rem; margin: 1rem 0; }
+        .btn-cta {
+            display: inline-block; background-color: var(--accent-red); color: white;
+            padding: 1rem 2.5rem; border-radius: 50px; font-weight: 700; text-decoration: none;
+            margin-top: 2rem; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-cta:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(231, 76, 60, 0.5); }
+        .envelope {
+            background: #f0f0f0; border-radius: 10px; padding: 2rem; position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;
+        }
+        .envelope::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            border-top: 100px solid var(--base-blue); border-left: 150px solid transparent;
+            border-right: 150px solid transparent; transform: translateY(-100px);
+        }
+        @media (max-width: 600px) { .envelope::before { border-left-width: 50vw; border-right-width: 50vw; } }
+        .letter { background: white; padding: 2rem; border-radius: 5px; margin-top: -50px; position: relative; z-index: 2; }
+        .checklist-item { display: flex; align-items: center; padding: 0.5rem; border-radius: 8px; transition: background-color 0.3s; }
+        .checklist-item input:checked + label { text-decoration: line-through; color: #95a5a6; }
+        .checklist-item:hover { background-color: #ecf0f1; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-8 md:py-16">
+
+        <section class="couple-hero text-center mb-16">
+            <h1 class="font-black uppercase">
+                La Aventura de<br>
+                <span class="couple-name">Alejandro & Natalia</span>
+            </h1>
+            <div class="heart-trail">✈️ ❤️ ✈️</div>
+            <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-700">Donde vayan, que sea juntos. Este no es un simple viaje; es una expedición extraordinariamente bien diseñada. Aquí desglosamos las claves que harán de su itinerario una experiencia excepcional.</p>
+            <a href="Itinerario_final_este_si_es_Optimizado.html" class="btn-cta">
+                Ver Nuestro Diario de Viaje ❤️
+            </a>
+        </section>
+
+        <section class="mb-16 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center mb-8 text-brand-base">Checklist Pre-Vuelo: Su Abrebocas del Viaje</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg text-center"><div class="text-5xl mb-4">🛂</div><h3 class="text-xl font-bold text-brand-base mb-2">Pasaportes y Fronteras</h3><p class="text-sm">Como colombianos, no necesitan visa. Gracias al acuerdo CA-4, su pasaporte es suficiente.</p></div>
+                <div class="bg-gray-50 p-6 rounded-lg text-center"><div class="text-5xl mb-4">🌦️</div><h3 class="text-xl font-bold text-brand-emphasis mb-2">Clima y Equipaje</h3><p class="text-sm">Empaquen en capas: ropa térmica para el frío de los volcanes (0-5°C) y ropa ligera para el calor de la costa (25-32°C).</p></div>
+                <div class="bg-gray-50 p-6 rounded-lg text-center"><div class="text-5xl mb-4">💵</div><h3 class="text-xl font-bold text-brand-accent mb-2">Moneda y Pagos</h3><p class="text-sm">En Guatemala usen Quetzales (GTQ) y USD. En El Salvador, la moneda oficial es el Dólar (USD).</p></div>
+                <div class="bg-gray-50 p-6 rounded-lg text-center"><div class="text-5xl mb-4">💪</div><h3 class="text-xl font-bold text-brand-base mb-2">Condición Física</h3><p class="text-sm">Prepárense para dos ascensos a volcanes y la carrera 10K. Una buena condición física es clave.</p></div>
+            </div>
+        </section>
+
+        <section class="mb-16 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center mb-2 text-brand-base">Distribución de Presupuesto Estimado</h2>
+            <p class="text-center max-w-2xl mx-auto mb-8">Una vista rápida de cómo se distribuyen los gastos principales por persona (sin incluir vuelos ni alojamiento).</p>
+            <div class="chart-container relative h-64 sm:h-80 w-full max-w-lg mx-auto">
+                <canvas id="budgetChart"></canvas>
+            </div>
+        </section>
+
+        <section class="mb-16 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center mb-2 text-brand-base">Visualización del Ritmo del Viaje</h2>
+            <p class="text-center max-w-2xl mx-auto mb-8">Este gráfico muestra el nivel de intensidad física y logística estimado para cada día, indicando la actividad principal para dar más contexto.</p>
+            <div class="chart-container relative h-64 sm:h-96 w-full max-w-4xl mx-auto">
+                <canvas id="intensityChart"></canvas>
+            </div>
+        </section>
+        <section class="mb-16 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center mb-2 text-brand-base">Termómetro de la Aventura</h2>
+            <p class="text-center max-w-2xl mx-auto mb-8">Visualicen el clima de su viaje: desde la "Zona de Abrazo" en el frío de los volcanes, hasta la "Zona de Poca Ropa" en la cálida costa del Pacífico.</p>
+            <div class="chart-container relative h-64 sm:h-96 w-full max-w-4xl mx-auto">
+                <canvas id="temperatureChart"></canvas>
+            </div>
+        </section>
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">Equipaje para Dos: Checklist Compartida</h2>
+             <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-lg shadow-lg">
+                <div>
+                    <h3 class="font-bold text-xl mb-4 text-brand-accent">Para Alejandro & Natalia (Ambos) ❤️</h3>
+                    <div class="checklist-item"><input type="checkbox" id="c1" class="mr-3"><label for="c1">Pasaportes y documentos de viaje</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c2" class="mr-3"><label for="c2">Adaptador de corriente universal</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c3" class="mr-3"><label for="c3">Botiquín básico (analgésicos, curitas)</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c4" class="mr-3"><label for="c4">Protector solar y repelente de insectos</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c5" class="mr-3"><label for="c5">Cámara o móvil para fotos inolvidables</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c6" class="mr-3"><label for="c6">Batería externa (Power Bank)</label></div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-4 text-brand-base">Equipo de Aventura (Por Persona) 🧗‍♀️🧗‍♂️</h3>
+                    <div class="checklist-item"><input type="checkbox" id="c7" class="mr-3"><label for="c7">Botas de trekking (¡ya usadas!)</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c8" class="mr-3"><label for="c8">Ropa térmica (capa base)</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c9" class="mr-3"><label for="c9">Chaqueta impermeable/cortavientos</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c10" class="mr-3"><label for="c10">Gorro, guantes y bufanda para el frío</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c11" class="mr-3"><label for="c11">Traje de baño para la costa</label></div>
+                    <div class="checklist-item"><input type="checkbox" id="c12" class="mr-3"><label for="c12">Ropa deportiva para la carrera 10K</label></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">Carta para los Viajeros</h2>
+            <div class="envelope max-w-4xl mx-auto">
+                <div class="letter">
+                    <div class="text-6xl mb-4 text-center">💌</div>
+                    <h2 class="text-2xl font-bold mb-4 text-center text-brand-accent">Para Alejandro y Natalia:</h2>
+                    <p class="max-w-3xl mx-auto text-lg mb-4">Este es un plan de viaje de calibre profesional. Es ambicioso, emocionante y está perfectamente estructurado para crear recuerdos imborrables. Su planificación es impecable.</p>
+                    <h3 class="font-semibold text-xl text-center">Una Única Recomendación:</h3>
+                    <p class="max-w-3xl mx-auto text-lg bg-blue-50 text-brand-base p-4 mt-2 rounded border-l-4 border-brand-base">La planificación es su mapa, pero la flexibilidad será su brújula. Recuerden que están en Centroamérica, una región donde lo inesperado es parte del encanto. Abracen cualquier imprevisto, pues a menudo es ahí donde se esconden las mejores historias de la aventura. <br><br> ¡Disfruten cada segundo de este viaje espectacular y ámense mucho!</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+        new Chart(budgetCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tours & Entradas', 'Transporte Interurbano', 'Comida y Bebidas'],
+                datasets: [{
+                    label: 'Distribución de Presupuesto',
+                    data: [350, 200, 250],
+                    backgroundColor: [ 'rgba(231, 76, 60, 0.7)', 'rgba(243, 156, 18, 0.7)', 'rgba(52, 152, 219, 0.7)' ],
+                    borderColor: [ '#E74C3C', '#F39C12', '#3498DB' ],
+                    borderWidth: 2
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: function(c) { return `${c.label}: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(c.parsed)}`; } } } } }
+        });
+
+        // ========= SCRIPT PARA GRÁFICO DE RITMO (AJUSTADO) =========
+        const intensityCtx = document.getElementById('intensityChart').getContext('2d');
+        const intensityData = {
+            labels: [
+                'D1: Llegada Antigua', 'D2: Lago Atitlán', 'D3: Nariz Indio', 'D4: Acatenango ↑', 'D5: Acatenango ↓', 
+                'D6: Pre-Carrera', 'D7: Carrera/Viaje SV', 'D8: Playa El Tunco', 'D9: Santa Ana', 
+                'D10: Volcán Sta. Ana', 'D11: Día Flexible', 'D12: Salida'
+            ],
+            datasets: [{
+                label: 'Nivel de Intensidad',
+                data: [3, 6, 5, 9, 10, 2, 8, 4, 4, 10, 2, 3],
+                fill: true,
+                backgroundColor: 'rgba(243, 156, 18, 0.2)',
+                borderColor: 'var(--emphasis-orange)',
+                pointBackgroundColor: 'var(--emphasis-orange)',
+                tension: 0.3,
+                borderWidth: 3,
+            }]
+        };
+        new Chart(intensityCtx, {
+            type: 'line',
+            data: intensityData,
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, max: 11, title: { display: true, text: 'Nivel de Intensidad (1-10)' } },
+                    x: { ticks: { maxRotation: 45, minRotation: 30 } } // Rotar etiquetas para que no se solapen
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // ========= SCRIPT PARA GRÁFICO DE TEMPERATURA (AJUSTADO) =========
+        const tempCtx = document.getElementById('temperatureChart').getContext('2d');
+        const tempData = {
+            labels: ['Antigua', 'Acatenango 🌋', 'Lago Atitlán', 'Costa SV ☀️', 'Volcán Sta. Ana', 'C. de Guatemala 🏛️'],
+            datasets: [
+                {
+                    label: 'Temp. Máx (°C)',
+                    data: [24, 10, 23, 32, 22, 25],
+                    borderColor: 'var(--emphasis-orange)',
+                    fill: false, tension: 0.1
+                },
+                {
+                    label: 'Temp. Mín (°C)',
+                    data: [14, 0, 15, 25, 12, 15],
+                    borderColor: 'var(--base-blue)',
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    fill: true, tension: 0.1
+                }
+            ]
+        };
+        
+        const ZoneAnnotationsPlugin = {
+            id: 'zoneAnnotations',
+            beforeDatasetsDraw(chart, args, options) {
+                const { ctx, chartArea: { top, bottom }, scales: { x, y } } = chart;
+                ctx.save();
+
+                // --- Zona de Abrazo ---
+                const abrazoX = x.getPixelForValue('Acatenango 🌋');
+                const abrazoY_start = y.getPixelForValue(10);
+                const abrazoY_end = y.getPixelForValue(0);
+                ctx.fillStyle = 'rgba(52, 152, 219, 0.1)';
+                ctx.fillRect(abrazoX - 40, abrazoY_start, 80, abrazoY_end - abrazoY_start);
+                ctx.fillStyle = '#3498DB';
+                ctx.font = 'bold 12px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('Zona de Abrazo 🤗', abrazoX, abrazoY_start + 15);
+
+                // --- Zona de Poca Ropa ---
+                const calorX = x.getPixelForValue('Costa SV ☀️');
+                const calorY_start = y.getPixelForValue(32);
+                const calorY_end = y.getPixelForValue(25);
+                ctx.fillStyle = 'rgba(231, 76, 60, 0.1)';
+                ctx.fillRect(calorX - 40, calorY_start, 80, calorY_end - calorY_start);
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 12px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('Zona Poca Ropa 👕', calorX, calorY_end - 5);
+
+                ctx.restore();
+            }
+        };
+
+        new Chart(tempCtx, {
+            type: 'line',
+            data: tempData,
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { title: { display: true, text: 'Temperatura (°C)' } } }
+            },
+            plugins: [ZoneAnnotationsPlugin]
+        });
+    });
+    </script>
+</body>
+</html>
