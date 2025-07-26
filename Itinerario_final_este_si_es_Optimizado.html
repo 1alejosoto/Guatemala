@@ -152,20 +152,139 @@
     </footer>
 
     <script>
-    // El código JavaScript para el itinerario permanece idéntico
+    // --- DATOS DEL ITINERARIO CON HOTELES INCLUIDOS ---
     const itineraryData = [
-        { day: 1, date: "Lunes, 28 de Julio", title: "Llegada y Corazón Colonial", location: "Antigua, Guatemala", plan: "Aterrizaje en el Aeropuerto La Aurora (GUA) y traslado a Antigua (aprox. 1-1.5h). Tras instalarse, paseo de aclimatación por el Parque Central para admirar la Catedral de San José y foto obligatoria en el Arco de Santa Catalina con el Volcán de Agua de fondo. Una tarde relajada para adaptarse a la altitud.", food: { celebration: [{ name: "Mesón Panza Verde", price: "$$$", type: "Cocina Internacional/Guatemalteca Fusión. Ambiente romántico con música en vivo.", link: "https://www.panzaverde.com/" }, { name: "Welten", price: "$$", type: "Cocina internacional en un jardín espectacular. Ideal para una cena relajada y deliciosa.", link: "https://www.facebook.com/weltenantigua/" }], local: "Para un almuerzo rápido y auténtico, busquen 'La Cuevita de los Urquizú' o 'Rincón Típico'. No se pierdan el Pepián, un recado espeso y delicioso, plato nacional de Guatemala." }, transport: { title: "Nuestra Ruta del Amor: Aeropuerto -> Antigua 🚗❤️", options: [{ name: "Uber/Taxi", price: "~$35-45 USD", details: "Opción más cómoda y directa." }, { name: "Shuttle Compartido", price: "~$15-20 USD p.p.", details: "Compañías como Adrenalina Tours. Puede requerir esperar.", link: "https://www.adrenalinatours.com/" }] }, planB: "Si el clima no acompaña, pueden visitar el ChocoMuseo para un taller de chocolate o explorar las ruinas del Convento de las Capuchinas." },
-        { day: 2, date: "Martes, 29 de Julio", title: "Pueblos Mágicos del Lago", location: "Lago Atitlán", plan: "Viaje a Panajachel. Desde el muelle, tomar una lancha pública (colectiva) a San Juan La Laguna. Dediquen la mañana a explorar sus galerías de arte naïf y cooperativas de textiles teñidos con tintes naturales. Por la tarde, tomen otra lancha a San Pedro La Laguna, conocido por su ambiente bohemio y sus cafés con vistas espectaculares.", food: { local: "En San Juan, prueben el pescado fresco del lago en algún comedor local frente al muelle. En San Pedro, 'Sababa' ofrece comida deliciosa con vistas. El plato a probar en la región es el 'Kak'ik', una sopa de pavo especiada." }, transport: { title: "Ruta del Amor: Antigua -> Panajachel", options: [{ name: "Adrenalina Tours", price: "~$25 USD p.p.", details: "Salidas diarias, usualmente 8:00 AM y 2:00 PM. Reservar con antelación es clave.", link: "https://www.adrenalinatours.com/" }, { name: "Marvelus Travel", price: "~$25 USD p.p.", details: "Servicio similar con buena reputación.", link: "https://marvelustravel.com/" }], notes: "Las lanchas públicas entre pueblos cuestan aprox. Q25 ($3.50 USD) por trayecto." }, planB: "Si la navegación es complicada por el viento, pueden explorar la Reserva Natural de Atitlán en Panajachel." },
-        { day: 3, date: "Miércoles, 30 de Julio", title: "Amanecer y Regreso a la Base", location: "Atitlán → Antigua", plan: "Tour muy temprano (inicio 4 AM) al mirador 'Nariz del Indio' para un amanecer espectacular sobre el lago y su cadena de volcanes. Regreso a su hotel para desayunar y check-out. Tarde para tomar el shuttle de vuelta a Antigua.", food: { celebration: [{ name: "Hector's Bistro", price: "$$", type: "Famoso por su filete y ambiente íntimo. Reservar es indispensable.", link: "https://www.facebook.com/HectorsBistro/" }, { name: "Once Once", price: "$$", type: "Deliciosa comida vegana y saludable en un patio hermoso.", link: "https://www.onceonceantigua.com/" }], local: "Antes de irse de Pana, un desayuno en 'Deli Jasmin' es una gran opción." }, transport: { title: "Ruta del Amor: Tour y Regreso a Antigua", options: [{ name: "Benke Tours", price: "~$20-25 USD p.p.", details: "Agencia local en San Pedro que organiza el tour del amanecer.", link: "https://www.facebook.com/benke.tours/" }, { name: "Shuttle Panajachel -> Antigua", price: "~$25 USD p.p.", details: "Mismas compañías operan la ruta de regreso." }] }, planB: "Si el clima impide el tour al amanecer, pueden visitar Santiago Atitlán para conocer al santo pagano Maximón." },
-        { day: 4, date: "Jueves, 31 de Julio", title: "Ascenso al Coloso de Fuego", location: "Volcán Acatenango", plan: "Día de la gran aventura. La agencia de tours los recogerá en su hotel en Antigua (8-9 AM). El ascenso de 5-6 horas los llevará hasta el campamento base. Noche mágica viendo las erupciones del Volcán de Fuego.", food: { local: "La comida está incluida en el tour (almuerzo, cena caliente). ¡Lleven snacks energéticos extra!" }, transport: { title: "Logística del Volcán (Comparativa)", options: [{ name: "Wicho & Charlie's", price: "~$75 USD", details: "Muy popular, buenas cabañas y equipo. Reservar con antelación.", link: "https://wichoandcharlies.com/" }, { name: "Tropicana Hostel", price: "~$69 USD", details: "Excelente opción con buena reputación.", link: "https://www.tropicanahostel.com/acatenango" }, { name: "CA Travelers", price: "~$60 USD", details: "Agencia local más económica con buenas críticas.", link: "https://catravelers.com/" }], notes: "El precio suele incluir transporte, guías, comidas y equipo. La entrada al parque (Q100) a veces es aparte." }, planB: "Si se cancela por clima extremo, una gran alternativa es el 'Hobbitenango' o una caminata más suave al Volcán Pacaya." },
-        { day: 5, date: "Viernes, 1 de Agosto", title: "Amanecer en la Cumbre y Descanso", location: "Acatenango → Antigua", plan: "Despertar a las 4 AM para el ascenso final (1-1.5h) a la cumbre del Acatenango. Ver el amanecer desde 3,976 metros es inolvidable. Descenso, desayuno y bajada de 3-4h a la base. Regreso a Antigua por la tarde.", food: { celebration: [{ name: "Bistrot Cinq", price: "$$$", type: "Cocina francesa clásica. Perfecto para celebrar.", link: "https://www.facebook.com/bistrotcinq/" }, { name: "Antigua Brewing Company", price: "$$", type: "Cerveza artesanal y buena comida para una cena casual.", link: "https://www.antiguabrewing.com/" }], local: "Al regresar, una sopa en 'La Sopa de la Abuela' puede ser perfecto." }, transport: { title: "Logística del Tour", options: [], notes: "El transporte de regreso a Antigua está incluido en el paquete del tour." }, planB: "La tarde es para descansar. Un masaje en 'Shen Massage' puede ser una excelente idea." },
-        { day: 6, date: "Sábado, 2 de Agosto", title: "Cultura y Víspera de Carrera", location: "Antigua, Guatemala", plan: "Día para aclimatarse y prepararse. Por la mañana, recoger el kit de la carrera 10K. Opcional: visitar una finca de café como 'Finca La Azotea' o el mercado de artesanías.", food: { local: "Cena ligera y rica en carbohidratos. 'El Tenedor del Cerro' ofrece vistas espectaculares. 'La Toscana' para una buena pasta." }, transport: { title: "Transporte Local en Antigua", options: [], notes: "Antigua es muy caminable. Para ir a lugares lejanos, un Uber o Tuk-Tuk es la mejor opción (aprox. Q30-Q50)." }, planB: "Para total relajación, pueden comprar un pase de día en la piscina de 'Porta Hotel Antigua'." },
-        { day: 7, date: "Domingo, 3 de Agosto", title: "¡Carrera y Rumbo a la Costa!", location: "Antigua → El Tunco, SV", plan: "¡Día de la carrera! Participar en los 10K de Antigua. Después de almorzar, tomar el shuttle privado a la 1 PM hacia El Tunco, Surf City en El Salvador. El viaje es una aventura en sí mismo.", food: { celebration: [{ name: "Beto's Restaurant", price: "$$$", type: "Famoso por sus mariscos y vistas al atardecer.", link: "https://www.facebook.com/betosrestaurante/" }, { name: "Cadejo Brewing Company", price: "$$", type: "Cervecería artesanal frente al mar.", link: "https://www.cadejobrewing.com/" }], local: "Al llegar a El Tunco, unas pupusas de 'Pupusería La Esquina' son una bienvenida perfecta." }, transport: { title: "Ruta Internacional: Antigua -> El Tunco", options: [{ name: "Gekko Explorer", price: "~$40-50 USD p.p.", details: "Ofrecen shuttles directos que se encargan del cruce fronterizo.", link: "https://www.gekkotrail.com/" }, { name: "Marvelus Travel", price: "~$40-50 USD p.p.", details: "También operan esta ruta. Confirmen horarios.", link: "https://marvelustravel.com/" }], notes: "Tengan sus pasaportes a mano. El proceso fronterizo es sencillo." }, planB: "Si el shuttle se cancela, la opción sería pasar la noche en Antigua y tomar el del día siguiente." },
-        { day: 8, date: "Lunes, 4 de Agosto", title: "De la Playa a la Capital", location: "El Tunco → San Salvador", plan: "Mañana de playa. Relájense en la arena negra, exploren cuevas o tomen una clase de surf. Por la tarde, traslado a la capital, San Salvador.", food: { local: "Desayuno en 'Dale Dale Café'. Para el almuerzo, un ceviche fresco en 'La Bocana'. En San Salvador, la Zona Rosa ofrece muchas opciones." }, transport: { title: "Ruta del Amor: El Tunco -> San Salvador", options: [{ name: "Uber", price: "~$30-40 USD", details: "La opción más flexible y cómoda (1 hora)." }, { name: "Bus Local (La 102A)", price: "~$1.50 USD p.p.", details: "Opción muy económica para aventureros." }] }, planB: "Si prefieren más playa, pueden extender su estancia en El Tunco y viajar a San Salvador temprano al día siguiente." },
-        { day: 9, date: "Martes, 5 de Agosto", title: "De la Capital a la Ciudad Heroica", location: "San Salvador → Santa Ana", plan: "Mañana libre en San Salvador para visitar el Museo de Arte (MARTE) o disfrutar de un café. Al mediodía, traslado a Santa Ana (aprox. 1.5h). Tarde para explorar su centro histórico.", food: { celebration: [{ name: "Restaurante La Pampa", price: "$$", type: "Buenas carnes en Santa Ana.", link: "https://www.facebook.com/LaPampaSantaAna/" }], local: "Almuerzo en San Salvador, 'Tipicos Margoth'. Cena en Santa Ana, 'Pupuseria La Ceiba'." }, transport: { title: "Ruta del Amor: San Salvador -> Santa Ana", options: [{ name: "Uber", price: "~$50-60 USD", details: "La opción más cómoda y directa." }, { name: "Bus de Lujo (TUDO)", price: "~$3-5 USD p.p.", details: "Buses cómodos y directos. Muy buena opción." }] }, planB: "Una opción más escénica es un tour por la 'Ruta de las Flores' para llegar a Santa Ana." },
-        { day: 10, date: "Miércoles, 6 de Agosto", title: "Cima de Santa Ana y Regreso a GT", location: "Volcán Santa Ana → Antigua", plan: "Salida muy temprano hacia el Parque Nacional Cerro Verde para la caminata al Volcán Santa Ana. Tras el descenso (1 PM), comenzará el largo viaje de regreso a Antigua, Guatemala (aprox. 5-6h).", food: { local: "Almuerzo rápido con vistas al Lago de Coatepeque. La cena será tarde en Antigua, algo rápido como 'Cactus Tacos'." }, transport: { title: "Logística Compleja: Volcán y Frontera", options: [{ name: "Tour + Transporte Privado", price: "~$200-250 USD", details: "La opción más eficiente. Contactar a Salvadorean Tours o EC Tours.", link: "#" }], notes: "La opción privada es altamente recomendada para este día por la complejidad logística." }, planB: "Si parece demasiado, pasar la noche en Santa Ana y viajar a Antigua al día siguiente." },
-        { day: 11, date: "Jueves, 7 de Agosto", title: "Día de Decisión: Relax o Metrópolis", location: "Antigua / C. de Guatemala", plan: "Día flexible. Opción A: Relax y compras en Antigua. Opción B: Tomar un transporte a Ciudad de Guatemala para explorar la capital.", food: { celebration: [{ name: "Flor de Lis", price: "$$$", type: "En Ciudad de Guatemala. Uno de los mejores de LatAm.", link: "https://www.flordelisrestaurante.com/" }, { name: "Quiltro", price: "$$$", type: "En Antigua. Cocina de autor, menú degustación.", link: "https://www.instagram.com/quiltro.gt/" }], local: "En Ciudad de Guatemala, el 'Mercado Central' es una experiencia auténtica." }, transport: { title: "Ruta del Amor: Antigua <-> Guatemala", options: [{ name: "Uber", price: "~$30-40 USD", details: "La forma más cómoda y directa (1h)." }, { name: "Chicken Bus", price: "~$1.50 USD p.p.", details: "La experiencia local por excelencia." }] }, planB: "Visitar una cervecería artesanal de Antigua para un tour y degustación." },
-        { day: 12, date: "Viernes, 8 de Agosto", title: "Despedida y Vuelo de Regreso", location: "Antigua → Aeropuerto", plan: "Última mañana para un paseo por Antigua, compras de última hora o disfrutar de un último desayuno guatemalteco. Traslado al aeropuerto a las 12 PM para el vuelo de las 4:00 PM.", food: { local: "Un último gran desayuno en 'Caoba Farms' o en 'Fernando's Kaffee'." }, transport: { title: "Ruta Final: Antigua -> Aeropuerto ✈️", options: [{ name: "Uber/Taxi", price: "~$35-45 USD", details: "La opción más confiable para llegar a tiempo." }, { name: "Shuttle Compartido", price: "~$15-20 USD p.p.", details: "Programar uno que salga a más tardar a las 11:30 AM.", link: "https://www.adrenalinatours.com/" }] }, planB: "Parar en el 'Mercado de Artesanías de la Aurora', frente al aeropuerto, para compras de último minuto." }
+        { 
+            day: 1, 
+            date: "Lunes, 28 de Julio", 
+            title: "Llegada y Corazón Colonial", 
+            location: "Antigua, Guatemala",
+            hotel: { name: "Casa Dos Tierras", address: "Calle Ancha de los Herreros, callejón el castillo casa #7" },
+            plan: "Aterrizaje en el Aeropuerto La Aurora (GUA) y traslado a Antigua (aprox. 1-1.5h). Tras instalarse, paseo de aclimatación por el Parque Central para admirar la Catedral de San José y foto obligatoria en el Arco de Santa Catalina con el Volcán de Agua de fondo. Una tarde relajada para adaptarse a la altitud.", 
+            food: { celebration: [{ name: "Mesón Panza Verde", price: "$$$", type: "Cocina Internacional/Guatemalteca Fusión. Ambiente romántico con música en vivo.", link: "https://www.panzaverde.com/" }, { name: "Welten", price: "$$", type: "Cocina internacional en un jardín espectacular. Ideal para una cena relajada y deliciosa.", link: "https://www.facebook.com/weltenantigua/" }], local: "Para un almuerzo rápido y auténtico, busquen 'La Cuevita de los Urquizú' o 'Rincón Típico'. No se pierdan el Pepián, un recado espeso y delicioso, plato nacional de Guatemala." }, 
+            transport: { title: "Nuestra Ruta del Amor: Aeropuerto -> Antigua 🚗❤️", options: [{ name: "Uber/Taxi", price: "~$35-45 USD", details: "Opción más cómoda y directa." }, { name: "Shuttle Compartido", price: "~$15-20 USD p.p.", details: "Compañías como Adrenalina Tours. Puede requerir esperar.", link: "https://www.adrenalinatours.com/" }] }, 
+            planB: "Si el clima no acompaña, pueden visitar el ChocoMuseo para un taller de chocolate o explorar las ruinas del Convento de las Capuchinas." 
+        },
+        { 
+            day: 2, 
+            date: "Martes, 29 de Julio", 
+            title: "Pueblos Mágicos del Lago", 
+            location: "Lago Atitlán",
+            hotel: { name: "La Iguana Perdida", address: "Santa Cruz La Laguna, Sololá" },
+            plan: "Viaje a Panajachel. Desde el muelle, tomar una lancha pública (colectiva) a San Juan La Laguna. Dediquen la mañana a explorar sus galerías de arte naïf y cooperativas de textiles teñidos con tintes naturales. Por la tarde, tomen otra lancha a San Pedro La Laguna, conocido por su ambiente bohemio y sus cafés con vistas espectaculares.", 
+            food: { local: "En San Juan, prueben el pescado fresco del lago en algún comedor local frente al muelle. En San Pedro, 'Sababa' ofrece comida deliciosa con vistas. El plato a probar en la región es el 'Kak'ik', una sopa de pavo especiada." }, 
+            transport: { title: "Ruta del Amor: Antigua -> Panajachel", options: [{ name: "Adrenalina Tours", price: "~$25 USD p.p.", details: "Salidas diarias, usualmente 8:00 AM y 2:00 PM. Reservar con antelación es clave.", link: "https://www.adrenalinatours.com/" }, { name: "Marvelus Travel", price: "~$25 USD p.p.", details: "Servicio similar con buena reputación.", link: "https://marvelustravel.com/" }], notes: "Las lanchas públicas entre pueblos cuestan aprox. Q25 ($3.50 USD) por trayecto." }, 
+            planB: "Si la navegación es complicada por el viento, pueden explorar la Reserva Natural de Atitlán en Panajachel." 
+        },
+        { 
+            day: 3, 
+            date: "Miércoles, 30 de Julio", 
+            title: "Amanecer y Regreso a la Base", 
+            location: "Atitlán → Antigua",
+            hotel: { name: "Casa Dos Tierras", address: "Calle Ancha de los Herreros, callejón el castillo casa #7" },
+            plan: "Tour muy temprano (inicio 4 AM) al mirador 'Nariz del Indio' para un amanecer espectacular sobre el lago y su cadena de volcanes. Regreso a su hotel para desayunar y check-out. Tarde para tomar el shuttle de vuelta a Antigua.", 
+            food: { celebration: [{ name: "Hector's Bistro", price: "$$", type: "Famoso por su filete y ambiente íntimo. Reservar es indispensable.", link: "https://www.facebook.com/HectorsBistro/" }, { name: "Once Once", price: "$$", type: "Deliciosa comida vegana y saludable en un patio hermoso.", link: "https://www.onceonceantigua.com/" }], local: "Antes de irse de Pana, un desayuno en 'Deli Jasmin' es una gran opción." }, 
+            transport: { title: "Ruta del Amor: Tour y Regreso a Antigua", options: [{ name: "Benke Tours", price: "~$20-25 USD p.p.", details: "Agencia local en San Pedro que organiza el tour del amanecer.", link: "https://www.facebook.com/benke.tours/" }, { name: "Shuttle Panajachel -> Antigua", price: "~$25 USD p.p.", details: "Mismas compañías operan la ruta de regreso." }] }, 
+            planB: "Si el clima impide el tour al amanecer, pueden visitar Santiago Atitlán para conocer al santo pagano Maximón." 
+        },
+        { 
+            day: 4, 
+            date: "Jueves, 31 de Julio", 
+            title: "Ascenso al Coloso de Fuego", 
+            location: "Volcán Acatenango",
+            hotel: { name: "Campamento Base del Tour", address: "En las faldas del Volcán de Fuego" },
+            plan: "Día de la gran aventura. La agencia de tours los recogerá en su hotel en Antigua (8-9 AM). El ascenso de 5-6 horas los llevará hasta el campamento base. Noche mágica viendo las erupciones del Volcán de Fuego.", 
+            food: { local: "La comida está incluida en el tour (almuerzo, cena caliente). ¡Lleven snacks energéticos extra!" }, 
+            transport: { title: "Logística del Volcán (Comparativa)", options: [{ name: "Wicho & Charlie's", price: "~$75 USD", details: "Muy popular, buenas cabañas y equipo. Reservar con antelación.", link: "https://wichoandcharlies.com/" }, { name: "Tropicana Hostel", price: "~$69 USD", details: "Excelente opción con buena reputación.", link: "https://www.tropicanahostel.com/acatenango" }, { name: "CA Travelers", price: "~$60 USD", details: "Agencia local más económica con buenas críticas.", link: "https://catravelers.com/" }], notes: "El precio suele incluir transporte, guías, comidas y equipo. La entrada al parque (Q100) a veces es aparte." }, 
+            planB: "Si se cancela por clima extremo, una gran alternativa es el 'Hobbitenango' o una caminata más suave al Volcán Pacaya." 
+        },
+        { 
+            day: 5, 
+            date: "Viernes, 1 de Agosto", 
+            title: "Amanecer en la Cumbre y Descanso", 
+            location: "Acatenango → Antigua",
+            hotel: { name: "Hotel La Sin Ventura", address: "5a Avenida Sur 8, Antigua Guatemala" },
+            plan: "Despertar a las 4 AM para el ascenso final (1-1.5h) a la cumbre del Acatenango. Ver el amanecer desde 3,976 metros es inolvidable. Descenso, desayuno y bajada de 3-4h a la base. Regreso a Antigua por la tarde.", 
+            food: { celebration: [{ name: "Bistrot Cinq", price: "$$$", type: "Cocina francesa clásica. Perfecto para celebrar.", link: "https://www.facebook.com/bistrotcinq/" }, { name: "Antigua Brewing Company", price: "$$", type: "Cerveza artesanal y buena comida para una cena casual.", link: "https://www.antiguabrewing.com/" }], local: "Al regresar, una sopa en 'La Sopa de la Abuela' puede ser perfecto." }, 
+            transport: { title: "Logística del Tour", options: [], notes: "El transporte de regreso a Antigua está incluido en el paquete del tour." }, 
+            planB: "La tarde es para descansar. Un masaje en 'Shen Massage' puede ser una excelente idea." 
+        },
+        { 
+            day: 6, 
+            date: "Sábado, 2 de Agosto", 
+            title: "Cultura y Víspera de Carrera", 
+            location: "Antigua, Guatemala",
+            hotel: { name: "Hotel La Sin Ventura", address: "5a Avenida Sur 8, Antigua Guatemala" },
+            plan: "Día para aclimatarse y prepararse. Por la mañana, recoger el kit de la carrera 10K. Opcional: visitar una finca de café como 'Finca La Azotea' o el mercado de artesanías.", 
+            food: { local: "Cena ligera y rica en carbohidratos. 'El Tenedor del Cerro' ofrece vistas espectaculares. 'La Toscana' para una buena pasta." }, 
+            transport: { title: "Transporte Local en Antigua", options: [], notes: "Antigua es muy caminable. Para ir a lugares lejanos, un Uber o Tuk-Tuk es la mejor opción (aprox. Q30-Q50)." }, 
+            planB: "Para total relajación, pueden comprar un pase de día en la piscina de 'Porta Hotel Antigua'." 
+        },
+        { 
+            day: 7, 
+            date: "Domingo, 3 de Agosto", 
+            title: "¡Carrera y Rumbo a la Costa!", 
+            location: "Antigua → El Tunco, SV",
+            hotel: { name: "The Cabins", address: "CA-2 2422, El Tunco, La Libertad, el salvador" },
+            plan: "¡Día de la carrera! Participar en los 10K de Antigua. Después de almorzar, tomar el shuttle privado a la 1 PM hacia El Tunco, Surf City en El Salvador. El viaje es una aventura en sí mismo.", 
+            food: { celebration: [{ name: "Beto's Restaurant", price: "$$$", type: "Famoso por sus mariscos y vistas al atardecer.", link: "https://www.facebook.com/betosrestaurante/" }, { name: "Cadejo Brewing Company", price: "$$", type: "Cervecería artesanal frente al mar.", link: "https://www.cadejobrewing.com/" }], local: "Al llegar a El Tunco, unas pupusas de 'Pupusería La Esquina' son una bienvenida perfecta." }, 
+            transport: { title: "Ruta Internacional: Antigua -> El Tunco", options: [{ name: "Gekko Explorer", price: "~$40-50 USD p.p.", details: "Ofrecen shuttles directos que se encargan del cruce fronterizo.", link: "https://www.gekkotrail.com/" }, { name: "Marvelus Travel", price: "~$40-50 USD p.p.", details: "También operan esta ruta. Confirmen horarios.", link: "https://marvelustravel.com/" }], notes: "Tengan sus pasaportes a mano. El proceso fronterizo es sencillo." }, 
+            planB: "Si el shuttle se cancela, la opción sería pasar la noche en Antigua y tomar el del día siguiente." 
+        },
+        { 
+            day: 8, 
+            date: "Lunes, 4 de Agosto", 
+            title: "De la Playa a la Capital", 
+            location: "El Tunco → San Salvador",
+            hotel: { name: "Hotel por definir", address: "San Salvador, El Salvador" },
+            plan: "Mañana de playa. Relájense en la arena negra, exploren cuevas o tomen una clase de surf. Por la tarde, traslado a la capital, San Salvador. (Hotel por definir, no estaba en la lista).", 
+            food: { local: "Desayuno en 'Dale Dale Café'. Para el almuerzo, un ceviche fresco en 'La Bocana'. En San Salvador, la Zona Rosa ofrece muchas opciones." }, 
+            transport: { title: "Ruta del Amor: El Tunco -> San Salvador", options: [{ name: "Uber", price: "~$30-40 USD", details: "La opción más flexible y cómoda (1 hora)." }, { name: "Bus Local (La 102A)", price: "~$1.50 USD p.p.", details: "Opción muy económica para aventureros." }] }, 
+            planB: "Si prefieren más playa, pueden extender su estancia en El Tunco y viajar a San Salvador temprano al día siguiente." 
+        },
+        { 
+            day: 9, 
+            date: "Martes, 5 de Agosto", 
+            title: "De la Capital a la Ciudad Heroica", 
+            location: "San Salvador → Santa Ana",
+            hotel: { name: "Casa Central de Santa Ana", address: "1a avenida norte entre 6a y 8a calle oriente #9A, Santa Ana" },
+            plan: "Mañana libre en San Salvador para visitar el Museo de Arte (MARTE) o disfrutar de un café. Al mediodía, traslado a Santa Ana (aprox. 1.5h). Tarde para explorar su centro histórico.", 
+            food: { celebration: [{ name: "Restaurante La Pampa", price: "$$", type: "Buenas carnes en Santa Ana.", link: "https://www.facebook.com/LaPampaSantaAna/" }], local: "Almuerzo en San Salvador, 'Tipicos Margoth'. Cena en Santa Ana, 'Pupuseria La Ceiba'." }, 
+            transport: { title: "Ruta del Amor: San Salvador -> Santa Ana", options: [{ name: "Uber", price: "~$50-60 USD", details: "La opción más cómoda y directa." }, { name: "Bus de Lujo (TUDO)", price: "~$3-5 USD p.p.", details: "Buses cómodos y directos. Muy buena opción." }] }, 
+            planB: "Una opción más escénica es un tour por la 'Ruta de las Flores' para llegar a Santa Ana." 
+        },
+        { 
+            day: 10, 
+            date: "Miércoles, 6 de Agosto", 
+            title: "Cima de Santa Ana y Regreso a GT", 
+            location: "Volcán Santa Ana → Antigua",
+            hotel: { name: "Villa Sicilia", address: "14 Avenida 15-78, Zona 10, Guatemala" },
+            plan: "Salida muy temprano hacia el Parque Nacional Cerro Verde para la caminata al Volcán Santa Ana. Tras el descenso (1 PM), comenzará el largo viaje de regreso. Nota: El hotel está en Ciudad de Guatemala, no Antigua, para facilitar el día libre y el vuelo de regreso.", 
+            food: { local: "Almuerzo rápido con vistas al Lago de Coatepeque. La cena será tarde, algo rápido como 'Cactus Tacos' en Antigua o cerca del hotel en GUA." }, 
+            transport: { title: "Logística Compleja: Volcán y Frontera", options: [{ name: "Tour + Transporte Privado", price: "~$200-250 USD", details: "La opción más eficiente. Contactar a Salvadorean Tours o EC Tours.", link: "#" }], notes: "La opción privada es altamente recomendada para este día por la complejidad logística." }, 
+            planB: "Si parece demasiado, pasar la noche en Santa Ana y viajar a Antigua/GUA al día siguiente." 
+        },
+        { 
+            day: 11, 
+            date: "Jueves, 7 de Agosto", 
+            title: "Día de Decisión: Relax o Metrópolis", 
+            location: "Antigua / C. de Guatemala",
+            hotel: { name: "Villa Sicilia", address: "14 Avenida 15-78, Zona 10, Guatemala" },
+            plan: "Día flexible. Opción A: Relax y compras en Antigua. Opción B: Explorar la Zona 10 de Ciudad de Guatemala, cerca del hotel.", 
+            food: { celebration: [{ name: "Flor de Lis", price: "$$$", type: "En Ciudad de Guatemala. Uno de los mejores de LatAm.", link: "https://www.flordelisrestaurante.com/" }, { name: "Quiltro", price: "$$$", type: "En Antigua. Cocina de autor, menú degustación.", link: "https://www.instagram.com/quiltro.gt/" }], local: "En Ciudad de Guatemala, el 'Mercado Central' es una experiencia auténtica." }, 
+            transport: { title: "Ruta del Amor: Antigua <-> Guatemala", options: [{ name: "Uber", price: "~$30-40 USD", details: "La forma más cómoda y directa (1h)." }, { name: "Chicken Bus", price: "~$1.50 USD p.p.", details: "La experiencia local por excelencia." }] }, 
+            planB: "Visitar una cervecería artesanal de Antigua para un tour y degustación." 
+        },
+        { 
+            day: 12, 
+            date: "Viernes, 8 de Agosto", 
+            title: "Despedida y Vuelo de Regreso", 
+            location: "Antigua → Aeropuerto",
+            plan: "Última mañana para un paseo, compras de última hora o disfrutar de un último desayuno guatemalteco. Traslado al aeropuerto a las 12 PM para el vuelo de las 4:00 PM.", 
+            food: { local: "Un último gran desayuno en 'Caoba Farms' o en 'Fernando's Kaffee'." }, 
+            transport: { title: "Ruta Final: Antigua -> Aeropuerto ✈️", options: [{ name: "Uber/Taxi", price: "~$35-45 USD", details: "La opción más confiable para llegar a tiempo." }, { name: "Shuttle Compartido", price: "~$15-20 USD p.p.", details: "Programar uno que salga a más tardar a las 11:30 AM.", link: "https://www.adrenalinatours.com/" }] }, 
+            planB: "Parar en el 'Mercado de Artesanías de la Aurora', frente al aeropuerto, para compras de último minuto." 
+        }
     ];
         document.addEventListener('DOMContentLoaded', () => {
             const tripStartDate = new Date('2025-07-28T00:00:00');
@@ -177,20 +296,29 @@
 
             function generateItinerary() {
                 const container = document.getElementById('itinerary');
+                container.innerHTML = ''; // Limpiar el contenedor antes de generar
                 itineraryData.forEach(dayData => {
                     const dayDiv = document.createElement('div');
                     dayDiv.className = 'accordion-item';
                     dayDiv.innerHTML = `
                     <div class="accordion-title p-4 cursor-pointer">
                         <div class="flex-grow">
-                            <div class="flex items-center">
+                            <div class="flex items-start">
                                 <div class="text-center w-20 mr-4 flex-shrink-0">
                                     <div class="text-xl font-bold text-brand-base">Día ${dayData.day}</div>
                                     <div class="text-xs text-gray-500">${dayData.date.split(', ')[1]}</div>
                                 </div>
-                                <div>
+                                <div class="flex-grow">
                                     <h3 class="text-lg font-semibold text-gray-800">${dayData.title}</h3>
                                     <p class="text-sm text-gray-600">${dayData.location}</p>
+                                    ${dayData.hotel ? `
+                                    <div class="text-sm text-gray-500 mt-2 flex items-start">
+                                        <span class="text-lg mr-2">🏨</span>
+                                        <div>
+                                            <strong class="text-gray-700">Alojamiento:</strong> ${dayData.hotel.name}<br>
+                                            <span class="text-xs italic">${dayData.hotel.address}</span>
+                                        </div>
+                                    </div>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -245,7 +373,10 @@
                 });
 
                 container.addEventListener('click', function (e) {
-                    if (e.target.closest('.accordion-title')) { e.target.closest('.accordion-item').classList.toggle('accordion-open'); }
+                    const accordionItem = e.target.closest('.accordion-item');
+                    if (e.target.closest('.accordion-title')) { 
+                        accordionItem.classList.toggle('accordion-open'); 
+                    }
                     if (e.target.matches('.tab-btn')) {
                         const tabId = e.target.dataset.tab;
                         const contentArea = e.target.closest('.border-t');
