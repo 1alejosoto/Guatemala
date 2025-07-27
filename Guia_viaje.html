@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Viaje: Aventura GT & SV de Ale & Nata</title>
+    
+    <!-- Chosen Palette: Tierra Volcánica -->
+    <!-- Application Structure Plan: Se ha diseñado una Single-Page Application (SPA) con una estructura de acordeón interactivo, donde cada día del viaje es un panel expandible. Esta arquitectura se eligió por su claridad y facilidad de uso en dispositivos móviles. Dentro de cada día, se utiliza un sistema de pestañas (tabs) para segmentar la información enriquecida (Logística, Hotel, Actividades, Comida, Plan B, Consejos). El flujo de usuario es simple: abrir la app, tocar el día correspondiente y navegar por las pestañas de interés. Se incluye un gráfico de línea inicial para dar un panorama visual del 'ritmo' del viaje, comparando la intensidad física y la inmersión cultural. -->
+    <!-- Visualization & Content Choices: 1. Gráfico de Análisis del Viaje (Chart.js - Line Chart): Objetivo: Informar visualmente sobre la dinámica del viaje, mostrando picos de esfuerzo y de experiencias culturales. Interacción: Hover para ver detalles. Justificación: Ofrece un resumen más matizado que el gráfico de barras anterior. 2. Acordeón de Días (HTML/CSS/JS): Objetivo: Organizar el itinerario de forma secuencial y limpia. Interacción: Click para expandir/colapsar. 3. Pestañas de Consejos (HTML/CSS/JS): Objetivo: Organizar la información detallada por día. Interacción: Click para cambiar de pestaña. Se usan emojis como íconos para mejorar la usabilidad. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #F8F6F2;
+            --text-dark: #3D352E;
+            --primary: #AF4F41;
+            --accent: #5D7A74;
+            --highlight: #E4B95A;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+        }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .accordion-item .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-item.open .accordion-content {
+            max-height: 2500px;
+        }
+        .tab-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="font-display text-4xl md:text-6xl" style="color: var(--primary);">Corazón Maya y Fuego Volcánico</h1>
+            <p class="text-lg md:text-xl mt-2" style="color: var(--text-dark);">La Guía de Viaje Definitiva para Alejandro & Natalia</p>
+        </header>
+
+        <section id="dashboard" class="mb-8 md:mb-12 bg-white/50 p-6 rounded-2xl shadow-sm">
+            <h2 class="font-display text-2xl md:text-3xl text-center mb-4" style="color: var(--accent);">Análisis de su Viaje</h2>
+            <p class="text-center text-md mb-6 max-w-2xl mx-auto">
+                Este gráfico visualiza la dinámica de su aventura. La línea de 'Intensidad' mide el esfuerzo físico y logístico, mientras que 'Inmersión Cultural' refleja las experiencias auténticas. Úsenlo para anticipar los picos y valles del viaje.
+            </p>
+            <div class="chart-container">
+                <canvas id="tripAnalysisChart"></canvas>
+            </div>
+        </section>
+
+        <section id="itinerary">
+            <h2 class="font-display text-2xl md:text-3xl text-center mb-8" style="color: var(--accent);">Su Itinerario Enriquecido, Día a Día</h2>
+            <div id="itinerary-container" class="space-y-4">
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 pt-8 border-t border-gray-200">
+            <p class="text-sm" style="color: var(--text-dark);">Creado con cariño para que su viaje sea una leyenda. ¡Disfruten cada segundo!</p>
+            <p class="text-xs mt-1" style="color: var(--accent);">Planificador Experto de Aventuras</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const itineraryData = [
+                {
+                    day: 1,
+                    date: "Lunes, 28 de Julio",
+                    title: "Llegada a Antigua y Primera Inmersión",
+                    location: "Antigua, Guatemala",
+                    icon: "🛬",
+                    plan: "Llegada al aeropuerto, traslado a Antigua y check-in. Tarde para aclimatarse y explorar.",
+                    hotel: "<b>Casa Dos Tierras</b><br>Dirección: Calle Ancha de los Herreros, callejón el castillo casa #7, Antigua Guatemala.",
+                    logistics: "Un Uber/taxi negociado (Q250-300) es lo más cómodo. Si llegan en hora pico (4-7 PM), pidan al conductor la ruta por San Lucas para evitar el denso tráfico de la capital.",
+                    activities: "Caminata suave al Cerro de la Cruz al atardecer (4:30-5:30 PM). Las vistas del Volcán de Agua bañado en luz dorada son el mejor recibimiento que Antigua puede ofrecer.",
+                    food: "Cenen 'Pepián', el plato nacional. Para una experiencia auténtica, 'La Cuevita de los Urquizú' ofrece comida típica estilo buffet. Para un café de clase mundial, 'Artista de Café' es una parada obligatoria.",
+                    planB: "Si llueve, el ChocoMuseo ofrece talleres para hacer su propio chocolate. Es una actividad divertida y a cubierto.",
+                    expert: "Usen calzado muy cómodo, las calles empedradas son hermosas pero exigentes. Lleven siempre Quetzales en efectivo para tuk-tuks y compras pequeñas."
+                },
+                {
+                    day: 2,
+                    date: "Martes, 29 de Julio",
+                    title: "Rumbo al Mágico Lago Atitlán",
+                    location: "Antigua → Lago Atitlán",
+                    icon: "🏞️",
+                    plan: "Viaje por la mañana a Panajachel. Tomar lancha a Santa Cruz La Laguna para check-in y explorar un segundo pueblo.",
+                    hotel: "<b>La Iguana Perdida</b><br>Ubicación: Santa Cruz La Laguna, Sololá. (Accesible solo por lancha).",
+                    logistics: "Tomen un shuttle turístico de las 8 AM a Panajachel (aprox. 3 horas). Desde el muelle principal, tomen una lancha pública hacia Santa Cruz (es de las primeras paradas). Dejen su equipaje en el hotel.",
+                    activities: "Una vez instalados, ¡empieza la exploración! Desde Santa Cruz, tomen otra lancha a <b>San Juan La Laguna</b>. Es el pueblo del arte y las cooperativas de tejedoras. Visiten Casa Flor Ixcaco para una demostración de teñido natural. Así conocen Santa Cruz y San Juan el mismo día.",
+                    food: "Almuercen en San Juan en 'Alma De Colores' (comida con causa social). Para la cena, regresen a Santa Cruz. La cena comunal en 'La Iguana Perdida' es famosa y una gran oportunidad para conocer a otros viajeros.",
+                    planB: "Si el viento pica el lago y no es agradable viajar entre pueblos, quédense en Santa Cruz. Pueden nadar desde el muelle del hotel o hacer parte de la caminata escénica hacia el pueblo de Santa Cruz (arriba en la colina).",
+                    expert: "La Iguana Perdida es una institución en el lago. Aprovechen su ambiente social. Confirmen el precio de la lancha (Q15-25) antes de subir. Recuerden que la última lancha pública regresa sobre las 5 PM."
+                },
+                {
+                    day: 3,
+                    date: "Miércoles, 30 de Julio",
+                    title: "Amanecer en Atitlán y Regreso a Antigua",
+                    location: "Lago Atitlán → Antigua",
+                    icon: "🌅",
+                    plan: "Disfrutar del amanecer en el lago, última exploración y viaje de regreso a Antigua por la tarde para prepararse para el volcán.",
+                    hotel: "<b>Casa Dos Tierras</b><br>Dirección: Calle Ancha de los Herreros, callejón el castillo casa #7, Antigua Guatemala.",
+                    logistics: "Reserven un shuttle de regreso a Antigua que salga de Panajachel alrededor de las 2 PM. Esto les da toda la mañana en el lago. Deberán tomar una lancha de Santa Cruz a Panajachel sobre la 1 PM.",
+                    activities: "Levántense temprano para ver el amanecer desde el muelle de La Iguana. Alquilen un kayak a primera hora (7 AM) cuando el agua es un espejo. Es una experiencia mística. A su regreso a Antigua, compren snacks, agua extra y cualquier equipo que les falte para Acatenango.",
+                    food: "Desayunen fuerte en el lago. En Antigua, cenen algo ligero pero nutritivo. 'Samsara' (vegetariano) es una excelente opción para una comida saludable pre-ascenso.",
+                    planB: "Si la mañana está nublada, en lugar de madrugar, duerman un poco más y disfruten de un desayuno largo y tranquilo en el hotel antes de emprender el viaje de vuelta.",
+                    expert: "Para el volcán necesitarán: linterna de cabeza, guantes, gorro, snacks energéticos y al menos 3 litros de agua por persona. Pueden alquilar mochilas y ropa de abrigo en Antigua si no la traen."
+                },
+                {
+                    day: 4,
+                    date: "Jueves, 31 de Julio",
+                    title: "Ascenso al Gigante: Volcán Acatenango",
+                    location: "Volcán Acatenango",
+                    icon: "🌋",
+                    plan: "Recogida por el tour, inicio del ascenso y noche en el campamento base frente al Volcán de Fuego.",
+                    hotel: "Campamento Base de Acatenango (Tienda de campaña).",
+                    logistics: "El tour operador se encarga de la logística. Su única misión es poner un pie delante del otro. Vayan a su propio ritmo. La altitud es el verdadero desafío.",
+                    activities: "El trekking es la actividad principal. El premio es el atardecer y la noche, viendo las erupciones del Volcán de Fuego. Es uno de los espectáculos más impresionantes de la naturaleza.",
+                    food: "La comida la provee el tour. Lleven sus chocolates y nueces favoritas para un impulso moral y energético. Un termo con té caliente es un lujo que vale oro en la noche fría.",
+                    planB: "No hay Plan B. La montaña manda. Si el clima es extremo, los guías cancelarán el ascenso por seguridad. Confíen en su juicio.",
+                    expert: "La clave es la aclimatación de los días previos. Vístanse en capas: sudarán subiendo pero se congelarán en la cima. ¡No subestimen el frío de la noche a casi 4,000 metros!"
+                },
+                {
+                    day: 5,
+                    date: "Viernes, 1 de Agosto",
+                    title: "Amanecer en la Cima y Descenso",
+                    location: "Acatenango → Antigua",
+                    icon: "🌄",
+                    plan: "Despertar de madrugada para ver el amanecer desde la cumbre, descenso y regreso a Antigua para un merecido descanso.",
+                    hotel: "<b>Hotel La Sin Ventura</b><br>Dirección: 5a Avenida Sur 8, Antigua Guatemala.",
+                    logistics: "El descenso es rápido pero duro para las rodillas. Usen bastones de trekking. Al llegar a Antigua, la prioridad número uno es una ducha caliente, seguida de una siesta épica.",
+                    activities: "La única actividad recomendada es celebrar que lo lograron. Una cena de celebración es obligatoria.",
+                    food: "Dense un homenaje. 'Hector's Bistro' es perfecto para una cena romántica post-volcán. O si prefieren una pizza increíble y ambiente relajado, 'Cactus Taco-Shop' es el lugar.",
+                    planB: "Si el cansancio es extremo, pidan comida a domicilio y vean una película. No se sientan culpables por no hacer nada. Se lo han ganado.",
+                    expert: "Un masaje de tejido profundo por la tarde puede ser la mejor inversión del viaje para aliviar los músculos. 'Shen Masajes' en Antigua es muy recomendado."
+                },
+                {
+                    day: 6,
+                    date: "Sábado, 2 de Agosto",
+                    title: "Recuperación Activa y Preparativos",
+                    location: "Antigua, Guatemala",
+                    icon: "🧘",
+                    plan: "Día de recuperación con actividades ligeras, preparativos para la carrera y disfrutar de Antigua.",
+                    hotel: "<b>Hotel La Sin Ventura</b><br>Dirección: 5a Avenida Sur 8, Antigua Guatemala.",
+                    logistics: "Hoy es el día para moverse a un ritmo suave. Es el momento perfecto para recoger su kit para la carrera de 10K. Averigüen bien la ubicación y los horarios de entrega.",
+                    activities: "Consideren una visita a una finca de café como 'Finca La Azotea'. O para algo diferente, 'Valhalla Macadamia Farm', donde pueden probar productos y recibir un facial gratuito. Por la tarde, una clase de cocina en 'La Tortilla Cooking School' es una gran opción.",
+                    food: "Prueben los 'Rellenitos de Plátano' de un puesto callejero. Para almorzar, 'Caoba Farms' ofrece un ambiente increíble y comida orgánica de la granja a la mesa (está un poco a las afueras, vayan en tuk-tuk).",
+                    planB: "Si todavía sienten mucho el cansancio del volcán, una tarde de piscina en su hotel es un plan perfecto. O visiten 'Hobbitenango' para fotos divertidas y vistas espectaculares.",
+                    expert: "Este es un buen día para lavar ropa. Las lavanderías locales son rápidas y económicas. También es un buen momento para comprar recuerdos sin apuro en el Mercado de Artesanías."
+                },
+                {
+                    day: 7,
+                    date: "Domingo, 3 de Agosto",
+                    title: "¡10K en Antigua y Rumbo a la Costa!",
+                    location: "Antigua → El Tunco, El Salvador",
+                    icon: "🏃‍♂️",
+                    plan: "Correr la 10K por la mañana, celebrar y tomar un shuttle por la tarde hacia El Tunco, El Salvador.",
+                    hotel: "<b>The Cabins</b><br>Dirección: CA-2 2422, El Tunco, La Libertad, El Salvador.",
+                    logistics: "¡Corran para disfrutar! La altitud les afectará. Después de la carrera, almuercen rápido y tomen un shuttle internacional (reservado con antelación) alrededor de las 2-3 PM. Es un viaje largo (5-7 horas).",
+                    activities: "La carrera es la actividad principal. Al llegar a El Tunco por la noche, la única actividad es sentir la brisa del mar y tomar una cerveza local (Pilsener o Suprema).",
+                    food: "¡Carbohidratos post-carrera en Antigua! 'Angie Angie' es ideal. Para la cena en El Tunco, si llegan con hambre, busquen una pupusería abierta. ¡Su primera pupusa debe ser en El Salvador!",
+                    planB: "Si no pueden correr, disfruten del ambiente, animen a los corredores y luego sigan el plan de viaje. La aventura continúa.",
+                    expert: "Tengan sus pasaportes y USD$ en efectivo a mano para el cruce de frontera. El Salvador usa el dólar estadounidense, no necesitan cambiar moneda."
+                },
+                {
+                    day: 8,
+                    date: "Lunes, 4 de Agosto",
+                    title: "Olas en El Tunco y Tarde en la Capital",
+                    location: "El Tunco → San Salvador",
+                    icon: "🏄‍♀️",
+                    plan: "Mañana de playa y surf en El Tunco, y por la tarde, traslado a San Salvador para explorar la ciudad.",
+                    hotel: "Hotel moderno en San Salvador: Zonas como San Benito o Escalón son seguras y tienen excelentes hoteles como 'Hyatt Centric' o 'Sheraton Presidente'. (Reserva por su cuenta).",
+                    logistics: "Para ir de El Tunco a San Salvador, pueden tomar un Uber (más caro) o un bus local (opción económica y aventurera). El viaje dura aproximadamente 1 hora.",
+                    activities: "Tomen una clase de surf por la mañana. ¡Es casi obligatorio en El Tunco! Por la tarde en San Salvador, instalense en el hotel y luego exploren la Zona Rosa, el distrito de bares y restaurantes.",
+                    food: "En El Tunco, prueben un 'coctel de conchas'. En San Salvador, para cenar, 'El Bodegón' en la Colonia Escalón ofrece excelentes tapas y ambiente. O prueben 'Cadejo Brewing Company' (tienen sucursal en la ciudad) por sus cervezas artesanales.",
+                    planB: "Si el mar está muy bravo, exploren las cuevas en la playa de El Tunco con marea baja. Si llueve en San Salvador, visiten un centro comercial como 'La Gran Vía' o 'Multiplaza'.",
+                    expert: "San Salvador es una ciudad grande. Usen Uber para moverse, es seguro y eficiente. No muestren objetos de valor de forma ostentosa en el centro de la ciudad."
+                },
+                {
+                    day: 9,
+                    date: "Martes, 5 de Agosto",
+                    title: "Historia de San Salvador y Base en Santa Ana",
+                    location: "San Salvador → Santa Ana",
+                    icon: "🇸🇻",
+                    plan: "Explorar el centro histórico de San Salvador por la mañana y viajar por la tarde a la ciudad de Santa Ana.",
+                    hotel: "<b>Casa Central de Santa Ana</b><br>Dirección: 1a avenida norte entre 6a y 8a calle oriente #9A, Santa Ana, El Salvador.",
+                    logistics: "Tomen un bus de primera clase (como los de Tica Bus o Pullman) desde San Salvador a Santa Ana. Son cómodos y seguros. El viaje dura poco más de una hora.",
+                    activities: "Por la mañana, visiten el centro histórico de San Salvador: la Catedral Metropolitana, el Palacio Nacional y el Teatro Nacional. Es un área que ha sido revitalizada y es fascinante. Por la noche en Santa Ana, cenen y prepárense para la caminata del día siguiente.",
+                    food: "Desayunen 'pupusas revueltas con curtido y salsa'. ¡La comida del pueblo! En Santa Ana, la cena será más sencilla. Busquen un restaurante local cerca de la plaza central para probar la comida casera salvadoreña.",
+                    planB: "Si el centro de San Salvador les parece muy abrumador, una gran alternativa es subir al Parque Nacional El Boquerón, en el cráter del Volcán de San Salvador. Las vistas son espectaculares.",
+                    expert: "Al visitar el centro histórico, vistan de forma conservadora. Es una zona de mucho movimiento y es mejor pasar desapercibido. Guarden sus pertenencias de forma segura."
+                },
+                {
+                    day: 10,
+                    date: "Miércoles, 6 de Agosto",
+                    title: "Cráter Turquesa y Regreso a Guatemala",
+                    location: "Santa Ana → Ciudad de Guatemala",
+                    icon: "🏙️",
+                    plan: "Ascenso al Volcán de Santa Ana (Ilamatepec) por la mañana y viaje internacional por la tarde/noche a Ciudad de Guatemala.",
+                    hotel: "<b>Villa Sicilia</b><br>Dirección: 14 Avenida 15-78, Zona 10, Guatemala.",
+                    logistics: "La forma más fácil de hacer el volcán y el cruce de frontera en un día es contratando un shuttle privado o un tour que termine en Guatemala. Es más caro pero logísticamente más simple. Un bus público requeriría múltiples transbordos y sería muy largo.",
+                    activities: "La caminata al Volcán de Santa Ana es obligatoria. La vista de la laguna de cráter color turquesa es inolvidable. Es una caminata de dificultad moderada (mucho más fácil que Acatenango).",
+                    food: "Lleven snacks y agua para el volcán. Al llegar a Ciudad de Guatemala por la noche, cenen en el hotel o en algún restaurante cercano en la Zona Viva.",
+                    planB: "Si el volcán está cerrado (muy raro), dediquen el día a explorar el Lago de Coatepeque, que está cerca. Pueden almorzar con vistas increíbles al lago antes de empezar el viaje a Guatemala.",
+                    expert: "La caminata al volcán requiere unirse a un grupo con guías y policía turística que sale a una hora específica (usualmente 11 AM). No se puede subir por libre. ¡Lleven mucho protector solar!"
+                },
+                {
+                    day: 11,
+                    date: "Jueves, 7 de Agosto",
+                    title: "Cultura e Historia en la Capital",
+                    location: "Ciudad de Guatemala",
+                    icon: "🏛️",
+                    plan: "Día completo para explorar los museos y el centro histórico de Ciudad de Guatemala.",
+                    hotel: "<b>Villa Sicilia</b><br>Dirección: 14 Avenida 15-78, Zona 10, Guatemala.",
+                    logistics: "Usen Uber para moverse entre zonas. Es la forma más segura y económica. Empiecen por los museos de la Zona 13 por la mañana y luego diríjanse al centro (Zona 1).",
+                    activities: "Mañana de museos: Combinen el 'Museo Nacional de Arqueología y Etnología' (para ver tesoros mayas) y el 'Museo Ixchel del Traje Indígena' (para ver la cultura viva a través de los textiles). Por la tarde, exploren la Plaza de la Constitución, el Palacio Nacional de la Cultura y la Catedral Metropolitana.",
+                    food: "Para almorzar en el centro, 'San Martín' es una opción segura y deliciosa. Para la cena, la experiencia que pidieron: 'Donde Joselito Steakhouse' en Zona 10. Es un clásico de la ciudad para los amantes de la carne. ¡Hagan reservación!",
+                    planB: "Si prefieren el arte a la arqueología, visiten el 'Museo Nacional de Arte Moderno Carlos Mérida'.",
+                    expert: "El Centro Histórico (Zona 1) es fascinante de día, pero evítenlo por la noche. La Zona 10 (Zona Viva), donde se hospedan, es donde se concentra la vida nocturna y gastronómica más segura para turistas."
+                },
+                {
+                    day: 12,
+                    date: "Viernes, 8 de Agosto",
+                    title: "Guatemala Moderna y Despedida",
+                    location: "Ciudad de Guatemala",
+                    icon: "✈️",
+                    plan: "Mañana explorando la cara moderna de la ciudad, compras de última hora y vuelo de regreso.",
+                    hotel: "Check-out.",
+                    logistics: "Salgan hacia el Aeropuerto La Aurora (está en la Zona 13) con al menos 3 horas de antelación. Un Uber desde la Zona 10 no debería tardar más de 20-30 minutos sin tráfico.",
+                    activities: "Exploren '4 Grados Norte' (Zona 4) por la mañana. Es el distrito bohemio y creativo, lleno de cafés de especialidad, arte callejero y tiendas de diseño. Es el contraste perfecto con el centro histórico. Luego, pueden hacer compras de última hora en el 'Mercado Central' (para artesanías) o en un centro comercial como 'Oakland Mall'.",
+                    food: "Tomen un último gran desayuno-brunch en '4 Grados Norte'. 'La Esquina' o 'Paradigma Café' son excelentes opciones. Disfruten del mejor café de Guatemala antes de irse.",
+                    planB: "Si prefieren un final más relajado, 'Paseo Cayalá' (Zona 16) es una 'ciudad' peatonal con arquitectura europea, ideal para un último paseo y almuerzo tranquilo antes del vuelo.",
+                    expert: "Gastense sus últimos Quetzales en un buen café para llevar a casa. ¡El mejor recuerdo de Guatemala! ¡Buen viaje de regreso!"
+                }
+            ];
+
+            const itineraryContainer = document.getElementById('itinerary-container');
+
+            itineraryData.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'accordion-item bg-white rounded-2xl shadow-sm overflow-hidden';
+                dayElement.innerHTML = `
+                    <div class="accordion-title flex items-center justify-between p-4 md:p-5 cursor-pointer" style="background-color: #FFFFFF;">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-3xl">${day.icon}</div>
+                            <div>
+                                <p class="text-sm font-semibold" style="color: var(--accent);">${day.date.toUpperCase()} - DÍA ${day.day}</p>
+                                <h3 class="text-lg md:text-xl font-bold" style="color: var(--text-dark);">${day.title}</h3>
+                                <p class="text-sm" style="color: var(--text-dark);">${day.location}</p>
+                            </div>
+                        </div>
+                        <div class="arrow text-2xl transform transition-transform duration-300">▼</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-4 md:p-6 border-t border-gray-200">
+                            <div class="mb-6">
+                                <h4 class="font-bold text-md mb-2" style="color: var(--primary);">El Plan del Día:</h4>
+                                <p class="text-md">${day.plan}</p>
+                            </div>
+                            
+                            <div class="tabs">
+                                <div class="border-b border-gray-200 mb-4 overflow-x-auto">
+                                    <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                                        <button class="tab-btn active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm" data-tab="logistics">🚐 Logística</button>
+                                        <button class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="hotel">🏨 Hotel</button>
+                                        <button class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="activities">🎒 Actividades</button>
+                                        <button class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="food">🌮 Sabores</button>
+                                        <button class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="planB">☔️ Plan B</button>
+                                        <button class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="expert">💡 Consejo</button>
+                                    </nav>
+                                </div>
+                                <div class="tab-content" id="logistics-content">${day.logistics}</div>
+                                <div class="tab-content hidden" id="hotel-content">${day.hotel}</div>
+                                <div class="tab-content hidden" id="activities-content">${day.activities}</div>
+                                <div class="tab-content hidden" id="food-content">${day.food}</div>
+                                <div class="tab-content hidden" id="planB-content">${day.planB}</div>
+                                <div class="tab-content hidden" id="expert-content">${day.expert}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                itineraryContainer.appendChild(dayElement);
+            });
+
+            itineraryContainer.addEventListener('click', function(e) {
+                const accordionTitle = e.target.closest('.accordion-title');
+                if (accordionTitle) {
+                    const item = accordionTitle.parentElement;
+                    item.classList.toggle('open');
+                    const arrow = accordionTitle.querySelector('.arrow');
+                    arrow.classList.toggle('rotate-180');
+                    return;
+                }
+
+                const tabBtn = e.target.closest('.tab-btn');
+                if (tabBtn) {
+                    const tabContainer = tabBtn.closest('.tabs');
+                    const tabId = tabBtn.dataset.tab;
+                    
+                    tabContainer.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    tabBtn.classList.add('active');
+
+                    tabContainer.querySelectorAll('.tab-content').forEach(content => {
+                        if (content.id === `${tabId}-content`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                }
+            });
+
+            const ctx = document.getElementById('tripAnalysisChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12'],
+                    datasets: [
+                        {
+                            label: 'Intensidad (Física/Logística)',
+                            data: [3, 5, 6, 10, 7, 4, 8, 6, 7, 9, 5, 3],
+                            borderColor: 'rgba(175, 79, 65, 1)',
+                            backgroundColor: 'rgba(175, 79, 65, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Inmersión Cultural',
+                            data: [6, 8, 7, 9, 3, 7, 5, 6, 8, 8, 9, 7],
+                            borderColor: 'rgba(93, 122, 116, 1)',
+                            backgroundColor: 'rgba(93, 122, 116, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: 'Nivel (1-10)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Día del Viaje'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                    },
+                    interaction: {
+                        mode: 'index'
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
